@@ -1,57 +1,65 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import api from "../../services/api";
+import authService from "../../services/auth";
 
 function CreateJob() {
 
     const navigate = useNavigate();
 
-    const [companies, setCompanies] = useState([]);
+    const user = authService.getCurrentUser();
 
     const [job, setJob] = useState({
 
-        company_id: "",
+        job_title: "",
 
-        title: "",
+        category: "",
 
-        description: "",
+        employment_type: "",
 
-        location: "",
-
-        salary: "",
-
-        job_type: "Full Time",
+        work_mode: "",
 
         experience: "",
 
-        deadline: ""
+        salary_min: "",
+
+        salary_max: "",
+
+        openings: 1,
+
+        location: "",
+
+        description: "",
+
+        required_skills: "",
+
+        qualification: "",
+
+        application_deadline: "",
+
+        job_type: "Non-Tech",
+
+        test_subject_id: "",
+
+        test_num_questions: 10
 
     });
 
+    const [subjects, setSubjects] = useState([]);
+
     useEffect(() => {
-
-        loadCompanies();
-
+        const fetchSubjects = async () => {
+            try {
+                const res = await api.get("/test/subjects");
+                setSubjects(res.data);
+            } catch (err) {
+                console.error("Failed to load subjects:", err);
+            }
+        };
+        fetchSubjects();
     }, []);
 
-    const loadCompanies = async () => {
-
-        try {
-
-            const response = await api.get("/company/all");
-
-            setCompanies(response.data);
-
-        }
-
-        catch (error) {
-
-            console.log(error);
-
-        }
-
-    };
 
     const handleChange = (e) => {
 
@@ -65,7 +73,7 @@ function CreateJob() {
 
     };
 
-    const handleSubmit = async (e) => {
+    const createJob = async (e) => {
 
         e.preventDefault();
 
@@ -75,21 +83,31 @@ function CreateJob() {
 
                 "/job/create",
 
-                job
+                {
+
+                    ...job,
+
+                    user_id: user.id
+
+                }
 
             );
 
             alert("Job Created Successfully");
 
-            navigate("/admin/jobs");
+            navigate("/recruiter/jobs");
 
         }
 
         catch (error) {
 
-            console.log(error);
+            alert(
 
-            alert("Unable to create job");
+                error.response?.data?.message ||
+
+                "Unable to create job"
+
+            );
 
         }
 
@@ -99,169 +117,120 @@ function CreateJob() {
 
         <div className="container mt-5">
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
-                <h2>Create Job</h2>
-                <button className="btn btn-secondary" onClick={() => navigate(-1)} type="button">
-                    Back
-                </button>
-            </div>
+            <h2>Create Job</h2>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={createJob}>
 
-                <select
-
-                    className="form-select mt-3"
-
-                    name="company_id"
-
-                    value={job.company_id}
-
-                    onChange={handleChange}
-
-                >
-
-                    <option value="">
-
-                        Select Company
-
-                    </option>
-
-                    {
-
-                        companies.map(company => (
-
-                            <option
-
-                                key={company.id}
-
-                                value={company.id}
-
-                            >
-
-                                {company.company_name}
-
-                            </option>
-
-                        ))
-
-                    }
-
-                </select>
-
-                <input
-
-                    className="form-control mt-3"
-
-                    name="title"
-
+                <input className="form-control mt-3"
+                    name="job_title"
                     placeholder="Job Title"
-
-                    value={job.title}
-
                     onChange={handleChange}
+                    required
+                />
 
+                <input className="form-control mt-3"
+                    name="category"
+                    placeholder="Category"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    name="employment_type"
+                    placeholder="Employment Type"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    name="work_mode"
+                    placeholder="Work Mode"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    name="experience"
+                    placeholder="Experience"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    type="number"
+                    name="salary_min"
+                    placeholder="Minimum Salary"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    type="number"
+                    name="salary_max"
+                    placeholder="Maximum Salary"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    type="number"
+                    name="openings"
+                    placeholder="Openings"
+                    onChange={handleChange}
+                />
+
+                <input className="form-control mt-3"
+                    name="location"
+                    placeholder="Location"
+                    onChange={handleChange}
                 />
 
                 <textarea
-
                     className="form-control mt-3"
-
                     rows="5"
-
                     name="description"
-
                     placeholder="Job Description"
-
-                    value={job.description}
-
                     onChange={handleChange}
+                    required
+                />
 
+                <textarea
+                    className="form-control mt-3"
+                    rows="3"
+                    name="required_skills"
+                    placeholder="Required Skills"
+                    onChange={handleChange}
                 />
 
                 <input
-
                     className="form-control mt-3"
-
-                    name="location"
-
-                    placeholder="Location"
-
-                    value={job.location}
-
+                    name="qualification"
+                    placeholder="Qualification"
                     onChange={handleChange}
-
                 />
 
                 <input
-
                     className="form-control mt-3"
-
-                    name="salary"
-
-                    placeholder="Salary"
-
-                    value={job.salary}
-
+                    type="date"
+                    name="application_deadline"
                     onChange={handleChange}
-
                 />
 
-                <select
-
-                    className="form-select mt-3"
-
-                    name="job_type"
-
-                    value={job.job_type}
-
-                    onChange={handleChange}
-
-                >
-
-                    <option>Full Time</option>
-
-                    <option>Part Time</option>
-
-                    <option>Internship</option>
-
-                    <option>Remote</option>
-
+                <select className="form-select mt-3" name="job_type" value={job.job_type} onChange={handleChange} required>
+                    <option value="Non-Tech">Non-Tech</option>
+                    <option value="Tech">Tech</option>
                 </select>
 
-                <input
+                {job.job_type === "Tech" && (
+                    <>
+                        <select className="form-select mt-3" name="test_subject_id" value={job.test_subject_id} onChange={handleChange} required>
+                            <option value="">Select Mock Test Subject</option>
+                            {subjects.map(sub => (
+                                <option key={sub.id} value={sub.id}>{sub.name}</option>
+                            ))}
+                        </select>
+                        <input className="form-control mt-3" type="number" name="test_num_questions" value={job.test_num_questions} placeholder="Number of Questions" onChange={handleChange} min="1" required />
+                    </>
+                )}
 
-                    className="form-control mt-3"
-
-                    type="number"
-
-                    name="experience"
-
-                    placeholder="Experience (Years)"
-
-                    value={job.experience}
-
-                    onChange={handleChange}
-
-                />
-
-                <input
-
-                    className="form-control mt-3"
-
-                    type="date"
-
-                    name="deadline"
-
-                    value={job.deadline}
-
-                    onChange={handleChange}
-
-                />
 
                 <button
-
                     className="btn btn-primary mt-4"
-
+                    type="submit"
                 >
 
                     Create Job
