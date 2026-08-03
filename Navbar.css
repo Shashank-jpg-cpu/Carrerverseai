@@ -1,0 +1,61 @@
+.navbar{
+
+    padding:15px 0;
+
+}
+
+.navbar-brand{
+
+    font-size:28px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.nav-link{
+
+    color:white !important;
+
+    font-size:17px;
+
+    margin-left:15px;
+
+    transition:.3s;
+
+}
+
+.nav-link:hover{
+
+    color:#ffd43b !important;
+
+}
+
+.navbar .btn{
+
+    font-weight:600;
+
+    border-radius:8px;
+
+    padding:8px 18px;
+
+}
+
+@media(max-width:992px){
+
+    .navbar-nav{
+
+        margin-top:20px;
+
+    }
+
+    .nav-link{
+
+        margin-left:0;
+
+        margin-bottom:10px;
+
+    }
+
+}

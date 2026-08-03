@@ -1,0 +1,65 @@
+.sidebar{
+
+    width:260px;
+
+    min-height:100vh;
+
+    background:#1f2937;
+
+    color:white;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    padding-top:10px;
+
+}
+
+.sidebar h3{
+
+    color:white;
+
+    font-weight:bold;
+
+}
+
+.sidebar ul{
+
+    padding:0;
+
+}
+
+.sidebar li{
+
+    list-style:none;
+
+}
+
+.sidebar a{
+
+    display:block;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:15px 20px;
+
+    transition:.3s;
+
+}
+
+.sidebar a:hover{
+
+    background:#374151;
+
+}
+
+.sidebar a.active{
+
+    background:#2563eb;
+
+}

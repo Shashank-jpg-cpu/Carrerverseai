@@ -1,0 +1,38 @@
+.footer {
+    background: #131b2e;
+    color: white;
+    margin-top: auto;
+    padding: 60px 0 20px;
+}
+
+.footer h3,
+.footer h5 {
+    margin-bottom: 20px;
+}
+
+.footer p,
+.footer li {
+    color: #ddd;
+    line-height: 1.8;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer li {
+    margin-bottom: 10px;
+}
+
+.footer hr {
+    border-color: rgba(255,255,255,0.15);
+    margin: 40px 0 20px;
+}
+.footer{
+    background:#131b2e;
+    color:#fff;
+    margin-top:520px;
+    padding:60px 0 20px;
+}

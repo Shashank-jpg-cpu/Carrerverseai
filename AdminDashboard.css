@@ -1,0 +1,45 @@
+.admin-dashboard{
+
+    padding:60px;
+
+    background:#f4f7fc;
+
+    min-height:100vh;
+
+}
+
+.dashboard-card{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.dashboard-card:hover{
+
+    transform:translateY(-8px);
+
+}
+
+.dashboard-card h3{
+
+    color:#2563eb;
+
+}
+
+.dashboard-card h2{
+
+    margin-top:20px;
+
+    font-size:42px;
+
+}

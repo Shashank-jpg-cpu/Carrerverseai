@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera Test</title>
+</head>
+<body>
+
+<video id="cam" autoplay playsinline muted width="500" height="350" style="border:2px solid red;"></video>
+
+<script>
+async function start() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: false
+        });
+
+        console.log(stream);
+
+        const video = document.getElementById("cam");
+        video.srcObject = stream;
+
+        await video.play();
+
+        console.log("Width:", video.videoWidth);
+        console.log("Height:", video.videoHeight);
+
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+start();
+</script>
+
+</body>
+</html>
